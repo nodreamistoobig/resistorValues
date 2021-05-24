@@ -19,14 +19,14 @@ collection = db['photoresistor']
 def checkPort():
     for port in list_ports.comports():
         try:
-            s = serial.Serial(port.name, baudrate = 9600)
+            s = serial.Serial(port.device, baudrate = 9600)
             s.timeout = 1
             
             s.write(b'K')
           
             recieved = s.readline().strip()
             if (recieved==b"Q17"):
-                return port.name
+                return port.device
         except (KeyboardInterrupt, SerialException) as e:
             print(e)
             existed = False
