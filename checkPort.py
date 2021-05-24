@@ -52,23 +52,23 @@ def send(ts, v):
            
 
 while (existed):
-    print("looking for port...")
+    #print("looking for port...")
     port = checkPort() 
     if (port):
         s = serial.Serial(port, baudrate = 9600)
         s.timeout = 1
-        send_seconds = datetime.now().second
+        send_minutes = datetime.now().minute
         while(True):
             try:
-                seconds = datetime.now().second
-                if (send_seconds != seconds and seconds%5 == 0):
+                minutes = datetime.now().minute
+                if (send_minutes != minutes):
                     s.write(b'P')
                     photores = s.readline().decode().strip()
                     timestamp = datetime.now()
                     print(photores)
                     print(timestamp)
                     send(timestamp, photores)
-                    send_seconds = seconds 
+                    send_minutes = minutes 
             except(KeyboardInterrupt) as e:
                 print(e)
                 s.close()
